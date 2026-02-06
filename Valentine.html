@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valentine?</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background: #fff;
+    }
+
+    h1 { margin-bottom: 10px; }
+
+    button {
+      font-size: 18px;
+      padding: 12px 18px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      background: #f7f7f7;
+    }
+
+    #noBtn { position: relative; }
+
+    #message { margin-top: 20px; }
+
+    /* Hide these by default (NO ambiguity) */
+    #pics,
+    #noPicWrap {
+      display: none;
+    }
+
+    /* NO reaction image */
+    #noPicWrap { margin-top: 15px; }
+    #noPic {
+      width: 260px;
+      max-width: 90%;
+      border-radius: 16px;
+      margin: 10px;
+    }
+
+    /* YES gallery layout (only applies when JS sets display:flex) */
+    #pics {
+      margin-top: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    #pics img {
+      width: 240px;
+      max-width: 90%;
+      border-radius: 16px;
+    }
+
+    /* Special highlighted photo */
+    .highlight {
+      width: 380px;
+      max-width: 95%;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="title">Will you be my Valentine SEXY? 💘</h1>
+  <p id="subtitle">This is a very serious question.</p>
+  <p id="hint">if you want press "NO" to play around</p>
+
+  <div id="buttons">
+    <button id="yesBtn">YES ✅</button>
+    <button id="noBtn">NO 😡</button>
+  </div>
+
+  <div id="message"></div>
+
+  <!-- NO-click reaction image area -->
+  <div id="noPicWrap">
+    <img id="noPic" src="" alt="No reaction">
+  </div>
+
+  <!-- YES final gallery -->
+  <div id="pics">
+    <h2 style="width:100%">Okay, Finally!!!! 😭❤️</h2>
+
+    <p style="max-width: 600px; margin: 0 auto 25px; font-size: 17px; line-height: 1.5; width:100%;">
+      It's been almost three years now pookie bear. I miss you so much, i genuinely need you here right next to me.
+      Thank you for always being there me for me and understanding.
+      AHH i can't, i hate coding with a passion but i guess my love for you beats it.
+      Cause i would not be coding this right now. Anyways i love you cutie. ❤️
+    </p>
+
+    <!-- Highlighted special photo -->
+    <img src="photo1.jpg" class="highlight" alt="Us 1">
+
+    <!-- Rest of gallery -->
+    <img src="photo2.jpg" alt="Us 2">
+    <img src="photo3.jpg" alt="Us 3">
+    <img src="photo4.jpg" alt="Us 4">
+    <img src="photo5.jpg" alt="Us 5">
+    <img src="photo6.jpg" alt="Us 6">
+    <img src="photo7.jpg" alt="Us 7">
+    <img src="photo8.jpg" alt="Us 8">
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const pics = document.getElementById("pics");
+    const msg = document.getElementById("message");
+    const title = document.getElementById("title");
+    const subtitle = document.getElementById("subtitle");
+    const hint = document.getElementById("hint");
+
+    const noPicWrap = document.getElementById("noPicWrap");
+    const noPic = document.getElementById("noPic");
+
+    // GUARANTEE clean start on load
+    window.addEventListener("DOMContentLoaded", () => {
+      pics.style.display = "none";
+      noPicWrap.style.display = "none";
+      msg.innerHTML = "";
+    });
+
+    const noMessages = [
+      "WTF? 🥺",
+      "ARE we deadahh right now 🤨",
+      "That button feels wrong 😔",
+      "I will pretend I didn’t see that Gabi",
+      "NO RETRY IT NOW",
+      "You KNOW the answer \"BROSKI\" 😒",
+      "Okay bro you're doing too much, PRESS YES"
+    ];
+
+    // 7 images that match the 7 NO messages (name them exactly like this)
+    const noImages = [
+      "no1.jpg",
+      "no2.jpg",
+      "no3.jpg",
+      "no4.jpg",
+      "no5.jpg",
+      "no6.jpg",
+      "no7.jpg"
+    ];
+
+    let noCount = 0;
+
+    noBtn.addEventListener("click", () => {
+      const i = Math.min(noCount, noMessages.length - 1);
+
+      msg.innerHTML = `<h2>${noMessages[i]}</h2>`;
+
+      noPic.src = noImages[i];
+      noPicWrap.style.display = "block";
+
+      noCount++;
+
+      // playful movement
+      const moveX = Math.floor(Math.random() * 140) - 70;
+      const moveY = Math.floor(Math.random() * 100) - 50;
+      noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+
+      // yes grows
+      yesBtn.style.transform = `scale(${Math.min(1 + noCount * 0.08, 1.7)})`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      // clear NO stuff
+      msg.innerHTML = "";
+      noPicWrap.style.display = "none";
+
+      // update text
+      title.textContent = "That’s my Valentine 💘";
+      subtitle.textContent = "MI AMORRRR ❤️";
+      hint.style.display = "none";
+
+      // show YES gallery, hide buttons
+      pics.style.display = "flex";
+      document.getElementById("buttons").style.display = "none";
+    });
+  </script>
+</body>
+</html>
